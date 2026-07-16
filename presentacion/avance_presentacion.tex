@@ -111,17 +111,37 @@
 
 \begin{frame}{Fase 1 — EDA: distribución y balance de clases}
   \centering
-  \includegraphics[width=0.85\textwidth]{images/eda_analysis.png}
+  \includegraphics[width=0.62\textwidth]{images/eda_analysis.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item Dataset razonablemente balanceado: entre 1{,}650 y 2{,}020 imágenes por clase (promedio 1{,}850).
+    \item \textbf{Tomate} concentra el 26\% de las imágenes (10 subtipos de enfermedad); el resto se reparte entre 13 cultivos más.
+    \item División 80/20: 70{,}295 imágenes de entrenamiento y 17{,}572 de validación.
+    \item Prácticamente todas las imágenes vienen ya normalizadas a 256$\times$256 px.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Fase 2 — Distribución tras el preprocesamiento}
   \centering
-  \includegraphics[width=0.72\textwidth]{images/class_distribution_preprocessed.png}
+  \includegraphics[width=0.58\textwidth]{images/class_distribution_preprocessed.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item Tras el Data Augmentation la distribución por clase queda aún más pareja (todas entre 1{,}650 y 2{,}020 imágenes).
+    \item Las proporciones por cultivo se mantienen igual que en el EDA; el objetivo no era cambiar el balance entre cultivos, sino asegurar suficientes ejemplos por cada clase individual.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Fase 2 — Ejemplo de Data Augmentation}
   \centering
-  \includegraphics[width=0.78\textwidth]{images/data_augmentation_example.png}
+  \includegraphics[width=0.68\textwidth]{images/data_augmentation_example.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item Misma hoja transformada 9 veces: rotaciones, recortes/zoom y cambios de color/brillo.
+    \item Las variaciones son visuales, no alteran el patrón de la enfermedad — el objetivo es que el modelo no memorice el ángulo o la iluminación exacta de cada foto, sino la forma y textura de la lesión.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Fase 3 — CNN propia: resultado}
@@ -138,8 +158,14 @@
 
 \begin{frame}{Fase 3 — Resultado CNN Propia}
   \centering
-  \includegraphics[width=0.68\textwidth]{images/cnn_custom_result.png}
-  \vspace{0.3cm}
+  \includegraphics[width=0.52\textwidth]{images/cnn_custom_result.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item 99.73\% de accuracy en validación, muy por encima del azar (2.63\%, equivalente a acertar 1 de 38 clases).
+    \item Confirma que el modelo aprendió patrones reales de las imágenes y no está adivinando.
+  \end{itemize}
+  \vspace{0.15cm}
   \footnotesize Nota: no se generaron las curvas de entrenamiento por época (\texttt{cnn\_custom\_training.png}) porque la sesión de Kaggle se cortó antes de esa etapa final del script; el valor mostrado es el accuracy real del checkpoint guardado.
 \end{frame}
 
