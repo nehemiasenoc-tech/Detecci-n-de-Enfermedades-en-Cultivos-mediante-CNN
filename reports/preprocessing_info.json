@@ -1,0 +1,24 @@
+{
+  "image_size": [
+    224,
+    224
+  ],
+  "batch_size": 32,
+  "normalization": "rescale 1/255",
+  "augmentation": {
+    "rotation_range": 25,
+    "width_shift_range": 0.15,
+    "height_shift_range": 0.15,
+    "shear_range": 0.15,
+    "zoom_range": 0.2,
+    "horizontal_flip": true,
+    "brightness_range": [
+      0.8,
+      1.2
+    ],
+    "channel_shift_range": 0.1
+  },
+  "train_samples": 70295,
+  "val_samples": 17572,
+  "num_classes": 38
+}

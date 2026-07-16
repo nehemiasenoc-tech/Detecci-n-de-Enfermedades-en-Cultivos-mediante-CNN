@@ -1,0 +1,44 @@
+{
+  "dataset_summary": {
+    "total_classes": 38,
+    "total_images": 87867,
+    "train_images": 70295,
+    "val_images": 17572,
+    "test_images": 0,
+    "crops": [
+      "Apple",
+      "Blueberry",
+      "Cherry (including sour)",
+      "Corn (maize)",
+      "Grape",
+      "Orange",
+      "Peach",
+      "Pepper, bell",
+      "Potato",
+      "Raspberry",
+      "Soybean",
+      "Squash",
+      "Strawberry",
+      "Tomato"
+    ],
+    "num_crops": 14
+  },
+  "class_balance": {
+    "min_images": 1642,
+    "max_images": 2022,
+    "mean_images": 1849.8684210526317,
+    "std_images": 104.32393151612246,
+    "imbalance_ratio": 1.2314250913520097
+  },
+  "resolutions": {
+    "sample_size": 266,
+    "width_range": [
+      256,
+      256
+    ],
+    "height_range": [
+      256,
+      256
+    ]
+  }
+}

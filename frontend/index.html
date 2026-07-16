@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detección de Enfermedades en Cultivos</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Deteccion de Enfermedades en Cultivos</h1>
+            <p>Sistema Inteligente basado en Redes Neuronales Convolucionales (CNN)</p>
+        </header>
+
+        <div class="upload-card">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="imageInput" accept="image/*">
+                <div class="upload-icon">&#127807;</div>
+                <div class="upload-text">Arrastra una imagen o haz clic para seleccionar</div>
+                <div class="upload-hint">Formatos: JPG, PNG, BMP (max 10MB)</div>
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <img id="previewImage" src="" alt="Vista previa">
+            </div>
+
+            <button class="btn-analyze" id="analyzeBtn" disabled>
+                Analizar Imagen
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analizando imagen...</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-header">
+                <h2>Resultado del Analisis</h2>
+            </div>
+            <div class="result-grid">
+                <div class="result-item cultivo">
+                    <div class="label">Cultivo</div>
+                    <div class="value" id="resultCultivo">-</div>
+                </div>
+                <div class="result-item enfermedad">
+                    <div class="label">Enfermedad</div>
+                    <div class="value" id="resultEnfermedad">-</div>
+                </div>
+                <div class="result-item probabilidad">
+                    <div class="label">Probabilidad</div>
+                    <div class="value" id="resultProbabilidad">-</div>
+                </div>
+            </div>
+            <div class="probability-bar">
+                <div class="probability-fill" id="probabilityFill" style="width: 0%"></div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <span class="status-badge" id="statusBadge"></span>
+            </div>
+        </div>
+
+        <div class="api-status">
+            <span class="dot" id="apiDot"></span>
+            <span id="apiStatus">Verificando conexion...</span>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "model": "ResNet50 Transfer Learning",
+  "num_classes": 38,
+  "epochs_trained": 30,
+  "best_epoch": 26,
+  "final_train_accuracy": 0.7883633375167847,
+  "final_val_accuracy": 0.7237650752067566,
+  "best_val_accuracy": 0.7685522437095642,
+  "final_train_loss": 0.6601635217666626,
+  "final_val_loss": 0.95731121301651,
+  "training_time_minutes": 524.3648198167483,
+  "total_params": 24789158,
+  "trainable_params": 15645990,
+  "frozen_params": 9143168
+}

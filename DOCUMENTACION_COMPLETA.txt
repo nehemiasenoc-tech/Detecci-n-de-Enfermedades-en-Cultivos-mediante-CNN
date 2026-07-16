@@ -1,0 +1,662 @@
+==============================================================================
+DOCUMENTACION COMPLETA DEL PROYECTO
+==============================================================================
+Sistema Inteligente para la Deteccion de Enfermedades en Cultivos mediante CNN
+Despliegue en consola Linux (Docker / systemd)
+==============================================================================
+
+Autor: Grupo 2 - Proyecto Machine Learning
+Fecha: Julio 2026
+Dataset: https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset
+
+==============================================================================
+INDICE
+==============================================================================
+1. Resumen del Proyecto
+2. Estructura del Directorio
+3. Instalacion y Configuracion
+4. Ejecucion del Pipeline Completo
+5. Fase 1: Exploracion del Dataset (EDA) - 10%
+6. Fase 2: Preprocesamiento y Data Augmentation - 15%
+7. Fase 3: CNN Propia - 20%
+8. Fase 4: Transfer Learning (ResNet50) - 15%
+9. Fase 5: Evaluacion - 10%
+10. Fase 6: API Flask + Despliegue en Consola - 20%
+11. Fase 7: Frontend - 10%
+12. Despliegue en Linux (Docker / systemd)
+13. Preguntas de Analisis
+14. API Reference
+15. Solucion de Problemas
+
+==============================================================================
+1. RESUMEN DEL PROYECTO
+==============================================================================
+
+Este proyecto implementa un sistema completo para la deteccion de enfermedades
+en hojas de cultivos usando Redes Neuronales Convolucionales (CNN). El sistema
+incluye:
+
+- Analisis exploratorio completo del dataset
+- Preprocesamiento con Data Augmentation
+- Entrenamiento de una CNN personalizada
+- Transfer Learning con ResNet50
+- Evaluacion con metricas completas
+- API REST con Flask
+- Frontend web para prediccion en tiempo real
+- Despliegue con Docker y systemd
+
+El dataset contiene imagenes de hojas de 14 cultivos diferentes con 38 clases
+de enfermedades/salud.
+
+==============================================================================
+2. ESTRUCTURA DEL DIRECTORIO
+==============================================================================
+
+plant-disease-detection/
+|-- scripts/
+|   |-- 00_pipeline_completo.py    # Pipeline que ejecuta todo
+|   |-- 01_download_dataset.py     # Descarga desde Kaggle
+|   |-- 02_exploracion_dataset.py  # EDA completo
+|   |-- 03_preprocesamiento.py     # Preprocesamiento + Augmentation
+|   |-- 04_entrenar_cnn.py         # CNN personalizada
+|   |-- 05_transfer_learning.py    # ResNet50
+|   |-- 06_evaluacion.py           # Metricas y evaluacion
+|-- api/
+|   |-- app.py                     # API Flask
+|-- frontend/
+|   |-- index.html                 # Interfaz web
+|-- models/                        # Modelos entrenados (.keras)
+|-- reports/                       # Graficos y metricas (JSON)
+|-- logs/                          # Logs de la API
+|-- deploy/
+|   |-- cnn-api.service            # Archivo systemd
+|   |-- deploy.sh                  # Script de despliegue
+|-- dataset/                       # Dataset descargado
+|-- Dockerfile                     # Para Docker
+|-- requirements.txt               # Dependencias Python
+|-- .gitignore
+
+==============================================================================
+3. INSTALACION Y CONFIGURACION
+==============================================================================
+
+REQUISITOS PREVIOS:
+- Python 3.10+
+- pip
+- Docker (opcional, para Opcion A)
+- Git
+
+PASOS:
+
+  1. Clonar el repositorio:
+     git clone <url-del-repositorio>
+     cd plant-disease-detection
+
+  2. Crear entorno virtual:
+     python -m venv venv
+     source venv/bin/activate   # Linux/Mac
+     venv\Scripts\activate      # Windows
+
+  3. Instalar dependencias:
+     pip install -r requirements.txt
+
+  4. Configurar Kaggle API (para descargar dataset):
+     - Crear cuenta en kaggle.com
+     - Ir a Settings > API > Create New API Token
+     - Copiar kaggle.json a ~/.kaggle/
+     - chmod 600 ~/.kaggle/kaggle.json
+
+==============================================================================
+4. EJECUCION DEL PIPELINE COMPLETO
+==============================================================================
+
+Para ejecutar todas las fases automaticamente:
+
+  python scripts/00_pipeline_completo.py
+
+Para ejecutar fases individuales:
+
+  python scripts/01_download_dataset.py
+  python scripts/02_exploracion_dataset.py
+  python scripts/03_preprocesamiento.py
+  python scripts/04_entrenar_cnn.py
+  python scripts/05_transfer_learning.py
+  python scripts/06_evaluacion.py
+
+==============================================================================
+5. FASE 1: EXPLORACION DEL DATASET (EDA) - 10%
+==============================================================================
+
+SCRIPT: 02_exploracion_dataset.py
+
+QUE HACE:
+- Descarga el dataset desde Kaggle usando kagglehub
+- Cuenta clases, imagenes por clase, y balance
+- Analiza resoluciones de imagenes
+- Identifica cultivos representados
+- Genera graficos de distribucion
+- Detecta desbalance de clases
+
+ARCHIVOS GENERADOS:
+- reports/eda_analysis.png (graficos)
+- reports/eda_report.json (datos en JSON)
+
+METODOLOGIA:
+- Se recorre el dataset buscando directorios train/valid/test
+- Se cuentan imagenes por cada subcarpeta (clase)
+- Se analizan resoluciones de una muestra
+- Se calculan estadisticas: min, max, promedio, desviacion estandar
+- Se detecta si hay desbalance significativo (ratio max/min > 2)
+
+RESULTADOS ESPERADOS:
+- ~38 clases de enfermedades/salud
+- ~14 cultivos diferentes
+- ~70,000+ imagenes de entrenamiento
+- Imagenes con resoluciones variadas
+
+==============================================================================
+6. FASE 2: PREPROCESAMIENTO Y DATA AUGMENTATION - 15%
+==============================================================================
+
+SCRIPT: 03_preprocesamiento.py
+
+QUE HACE:
+- Resize de todas las imagenes a 224x224
+- Normalizacion: rescale 1/255 (valores [0, 1])
+- Split automatico: train/validation/test (via directorios del dataset)
+- Data Augmentation para el conjunto de entrenamiento
+
+DATA AUGMENTATION CONFIGURADO:
+- Rotacion: +/- 25 grados
+- Shift horizontal: 15%
+- Shift vertical: 15%
+- Shear: 15%
+- Zoom: +/- 20%
+- Flip horizontal
+- Rango de brillo: [0.8, 1.2]
+- Channel shift: 0.1
+
+ARCHIVOS GENERADOS:
+- reports/data_augmentation_example.png
+- reports/class_distribution_preprocessed.png
+- reports/class_mapping.json
+- reports/preprocessing_info.json
+
+POR QUE DATA AUGMENTATION:
+- Aumenta la variabilidad del dataset de entrenamiento
+- Reduce overfitting
+- Mejora la generalizacion a fotos reales
+- Compensa clases con pocas imagenes
+
+==============================================================================
+7. FASE 3: CNN PROPIA - 20%
+==============================================================================
+
+SCRIPT: 04_entrenar_cnn.py
+
+ARQUITECTURA:
+  Capa                  | Parametros
+  ----------------------|-----------
+  Input                 | (224, 224, 3)
+  Conv2D(32, 3x3)       | 896
+  BatchNorm             | 128
+  Conv2D(32, 3x3)       | 18,560
+  BatchNorm             | 128
+  MaxPooling(2x2)       | 0
+  Dropout(0.25)         | 0
+  Conv2D(64, 3x3)       | 18,496
+  BatchNorm             | 256
+  Conv2D(64, 3x3)       | 36,928
+  BatchNorm             | 256
+  MaxPooling(2x2)       | 0
+  Dropout(0.25)         | 0
+  Conv2D(128, 3x3)      | 73,856
+  BatchNorm             | 512
+  Conv2D(128, 3x3)      | 147,584
+  BatchNorm             | 512
+  MaxPooling(2x2)       | 0
+  Dropout(0.25)         | 0
+  Conv2D(256, 3x3)      | 295,168
+  BatchNorm             | 1,024
+  Conv2D(256, 3x3)      | 590,080
+  BatchNorm             | 1,024
+  MaxPooling(2x2)       | 0
+  Dropout(0.25)         | 0
+  GlobalAvgPool         | 0
+  Dense(512)            | 131,328
+  BatchNorm             | 1,024
+  Dropout(0.5)          | 0
+  Dense(256)            | 131,328
+  BatchNorm             | 512
+  Dropout(0.5)          | 0
+  Dense(num_classes)    | softmax
+
+TECNICAS APLICADAS:
+- Batch Normalization: estabiliza el entrenamiento
+- Dropout (0.25-0.5): previene overfitting
+- Global Average Pooling: reduce parametros vs Flatten
+- EarlyStopping: detiene si no mejora por 10 epocas
+- ReduceLROnPlateau: reduce learning rate si se estanca
+- Adam optimizer con lr=0.001
+
+CONFIGURACION:
+- Epocas maximas: 50
+- Batch size: 32
+- Learning rate: 0.001
+- Semilla: 42
+
+ARCHIVOS GENERADOS:
+- models/cnn_custom_best.keras
+- models/cnn_custom_final.keras
+- reports/cnn_custom_training.png
+- reports/cnn_custom_results.json
+
+==============================================================================
+8. FASE 4: TRANSFER LEARNING (ResNet50) - 15%
+==============================================================================
+
+SCRIPT: 05_transfer_learning.py
+
+METODOLOGIA:
+- Se carga ResNet50 preentrenada en ImageNet (sin capas fully connected)
+- Se congelan las primeras capas (feature extraction)
+- Se descongelan las ultimas 30 capas para fine-tuning
+- Se agregan capas densas personalizadas:
+  - GlobalAveragePooling2D
+  - BatchNormalization
+  - Dense(512, relu)
+  - BatchNormalization
+  - Dropout(0.5)
+  - Dense(256, relu)
+  - BatchNormalization
+  - Dropout(0.3)
+  - Dense(num_classes, softmax)
+
+VENTAJAS DEL TRANSFER LEARNING:
+- Aprovecha features preentrenadas en ImageNet (1.4M imagenes)
+- Requiere menos epocas para converger
+- Mejor rendimiento con datasets pequeños
+- Reduce tiempo de entrenamiento
+
+CONFIGURACION:
+- Epocas maximas: 30
+- Batch size: 32
+- Learning rate: 0.0001 (mas bajo que CNN propia)
+- Capas congeladas: todas excepto ultimas 30
+
+ARCHIVOS GENERADOS:
+- models/resnet50_best.keras
+- models/resnet50_final.keras
+- reports/resnet50_training.png
+- reports/resnet50_results.json
+- reports/model_comparison.png
+
+==============================================================================
+9. FASE 5: EVALUACION - 10%
+==============================================================================
+
+SCRIPT: 06_evaluacion.py
+
+METRICAS CALCULADAS:
+1. Accuracy: proporcion de predicciones correctas
+2. Precision: de las predichas como X, cuantas son realmente X
+3. Recall: de las que son X, cuantas fueron detectadas
+4. F1-Score: media harmonica de precision y recall
+5. Matriz de Confusión: tabla de predicciones vs reales
+6. Curvas ROC: para cada clase (One vs Rest)
+7. Metricas por clase: desglose completo
+
+TIPOS DE AVERAGE:
+- Weighted: promedio ponderado por soporte
+- Macro: promedio simple entre clases
+
+VISUALIZACIONES:
+- Matriz de confusión (normalizada y absoluta)
+- Metricas por clase (barras horizontales)
+- Curvas ROC (una por clase)
+- Comparacion de modelos
+
+ARCHIVOS GENERADOS:
+- reports/cnn_custom_confusion_matrix.png
+- reports/cnn_custom_per_class_metrics.png
+- reports/cnn_custom_roc_curves.png
+- reports/cnn_custom_evaluation.json
+- reports/resnet50_confusion_matrix.png
+- reports/resnet50_per_class_metrics.png
+- reports/resnet50_roc_curves.png
+- reports/resnet50_evaluation.json
+- reports/final_comparison.png
+- reports/final_model_comparison.json
+
+==============================================================================
+10. FASE 6: API FLASK + DESPLIEGUE EN CONSOLA - 20%
+==============================================================================
+
+SCRIPT: api/app.py
+
+ENDPOINTS:
+1. POST /predict
+   Content-Type: multipart/form-data
+   Body: image=<archivo de imagen>
+
+   Respuesta:
+   {
+       "cultivo": "Tomate",
+       "enfermedad": "Tomato Early Blight",
+       "probabilidad": 98.7
+   }
+
+2. GET /health
+   Respuesta: { "status": "healthy", "model_loaded": true, ... }
+
+3. GET /model/info
+   Respuesta: { "model_name": "...", "num_classes": 38, ... }
+
+4. GET /
+   Sirve el frontend HTML
+
+CARACTERISTICAS:
+- CORS habilitado
+- Validacion de formato de imagen
+- Logging a archivo y consola
+- Health check endpoint
+- Carga automatica del mejor modelo
+- Mapeo automatico de clases
+
+EJECUCION LOCAL:
+  python -m api.app
+  # o
+  flask --app api.app run --host 0.0.0.0 --port 5000
+
+PROBANDO LA API:
+  curl -X POST http://localhost:5000/predict \
+    -F "image=@hoja_ejemplo.jpg"
+
+==============================================================================
+11. FASE 7: FRONTEND - 10%
+==============================================================================
+
+ARCHIVO: frontend/index.html
+
+FUNCIONALIDADES:
+- Seleccion de imagen (clic o drag & drop)
+- Vista previa de la imagen
+- Boton de analisis
+- Spinner de carga
+- Tarjeta de resultados con:
+  * Cultivo identificado
+  * Enfermedad detectada
+  * Probabilidad con barra de progreso
+  * Badge de estado (SANO / ENFERMEDAD DETECTADA)
+- Manejo de errores
+- Indicador de estado de la API (online/offline)
+- Diseno responsive (mobile-friendly)
+
+TECNOLOGIAS:
+- HTML5
+- CSS3 (Flexbox, Grid, Animaciones)
+- JavaScript vanilla (sin frameworks)
+- Fetch API para comunicacion con backend
+
+EL FRONTEND:
+- Se sirve desde Flask en la raiz /
+- Consume el endpoint /predict via AJAX
+- Muestra resultados en formato JSON
+- Maneja errores de conexion y formatos invalidos
+
+==============================================================================
+12. DESPLIEGUE EN LINUX (DOCKER / SYSTEMD)
+==============================================================================
+
+OPCION A: DOCKER
+
+  # Construir imagen
+  docker build -t cnn-api .
+
+  # Ejecutar contenedor
+  docker run -d -p 5000:5000 --name cnn-api cnn-api
+
+  # Verificar
+  docker ps
+  docker logs cnn-api
+
+  # Detener
+  docker stop cnn-api
+
+  # Reiniciar
+  docker restart cnn-api
+
+  # Ver logs en vivo
+  docker logs -f cnn-api
+
+  # Shell dentro del contenedor
+  docker exec -it cnn-api bash
+
+OPCION B: SYSTEMD
+
+  # Crear entorno virtual
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+
+  # Crear directorio de logs
+  sudo mkdir -p /var/log/cnn-api
+
+  # Copiar servicio
+  sudo cp deploy/cnn-api.service /etc/systemd/system/
+
+  # Recargar daemon
+  sudo systemctl daemon-reload
+
+  # Habilitar e iniciar
+  sudo systemctl enable cnn-api
+  sudo systemctl start cnn-api
+
+  # Verificar
+  sudo systemctl status cnn-api
+  sudo journalctl -u cnn-api -f
+
+  # Reiniciar
+  sudo systemctl restart cnn-api
+
+  # Detener
+  sudo systemctl stop cnn-api
+
+SCRIPT AUTOMATICO:
+  chmod +x deploy/deploy.sh
+  ./deploy/deploy.sh
+
+COMPARACION DOCKER vs SYSTEMD:
+
+  | Aspecto          | Docker                  | systemd                  |
+  |------------------|-------------------------|--------------------------|
+  | Aislamiento      | Total (contenedor)      | Parcial (proceso)        |
+  | Reproducibilidad | Excelente               | Depende del SO           |
+  | Portabilidad     | Multiplataforma         | Solo Linux               |
+  | Overhead         | Ligero (~50MB)          | Minimo                   |
+  | Actualizaciones  | Rebuild imagen          | Reinstall dependencias   |
+  | Monitoreo        | docker logs             | journalctl               |
+  | Reinicio         | docker restart          | systemctl restart        |
+
+==============================================================================
+13. PREGUNTAS DE ANALISIS
+==============================================================================
+
+P1: Que ventajas ofrece una CNN frente a un modelo tradicional de ML?
+
+R: Las CNNs tienen ventajas fundamentales para imagenes:
+- Automaticamente aprenden features espaciales (bordes, texturas, patrones)
+- Son invariantes a translacion (reconocen el patron en cualquier posicion)
+- Comparten parametros ( pesos del filtro se reutilizan en toda la imagen)
+- Capturan jerarquia de features (bordes -> texturas -> partes -> objetos)
+- Los modelos tradicionales (SVM, Random Forest) requieren feature
+  engineering manual (HOG, SIFT) que es costoso y menos efectivo
+
+P2: Por que es importante el Data Augmentation en este dataset?
+
+R: El Data Augmentation es critico porque:
+- Aumenta artificialmente el tamano del dataset de entrenamiento
+- Reduce overfitting al presentar variaciones de las mismas imagenes
+- Mejora la generalizacion a fotos reales (diferentes angulos, luces)
+- Ayuda con clases que tienen pocas imagenes (desbalance)
+- Simula condiciones reales: rotaciones, cambios de brillo, etc.
+
+P3: Como se detecto y manejo el desbalance de clases?
+
+R: El desbalance se detecto en la Fase 1 (EDA):
+- Se calcularon estadisticas: min, max, promedio por clase
+- Se calculo el ratio max/min
+- Se verifico si > 2x (umbral de alerta)
+- Manejo: Data augmentation intensivo, posibilidad de class_weight
+
+P4: Que senales de overfitting se observaron y como se mitigaron?
+
+R: Senales detectadas:
+- Gap significativo entre accuracy de train y validation (> 10%)
+- Validation loss subiendo mientras train loss baja
+
+Mitigaciones implementadas:
+- Dropout (0.25 a 0.5) en capas densas
+- Batch Normalization
+- EarlyStopping (patience=10)
+- ReduceLROnPlateau
+- Data Augmentation
+- Global Average Pooling (reduce parametros)
+
+P5: Que rol cumple la funcion Softmax en la capa de salida?
+
+R: Softmax convierte las salidas crudas (logits) en probabilidades:
+- Cada valor esta en rango [0, 1]
+- La suma de todos los valores es 1
+- Permite interpretar la salida como distribucion de probabilidad
+- La clase con mayor probabilidad es la prediccion
+- Ejemplo: [0.02, 0.95, 0.03] -> clase 2 con 95% de confianza
+
+P6: Como se interpreta el accuracy obtenido? Es suficiente solo?
+
+R: El accuracy es la metrica principal pero NO es suficiente sola:
+- En datasets balanceados, accuracy es representativo
+- En datasets desbalanceados, puede ser enganoso
+- Ejemplo: 90% sano, 10% enfermo -> modelo que dice "sano" = 90% accuracy
+- Por eso se calculan precision, recall, F1-score y matriz de confusion
+- La precision indica cuan confiable es la prediccion positiva
+- El recall indica cuan bien detecta todos los casos positivos
+- F1-score balancea precision y recall
+
+P7: Que mejoras aplicarian para fotos reales de agricultores?
+
+R: Mejoras recomendadas:
+- Entrenar con fotos reales del entorno (fondo de campo, no fondo blanco)
+- Preprocesamiento: segmentacion de hoja, eliminacion de fondo
+- Mas Data augmentation: cambios de perspectiva, ruido, compresion
+- Fine-tuning con fotos del dominio especifico
+- Modelo de deteccion de objeto primero (YOLO), luego clasificacion
+- Ensemble de multiples modelos
+- Adaptacion a diferentes condiciones de luz (flash, sombra, sol)
+
+P8: Ventajas y desventajas de Docker vs systemd?
+
+R:
+DOCKER:
++ Aislamiento total
++ Reproducible en cualquier SO
++ Facil de escalar (docker-compose)
++ Rollback rapido
+- Overhead de imagen (~50-200MB)
+- Requiere instalacion de Docker
+
+SYSTEMD:
++ Sin overhead de contenedor
++ Integrado en Linux
++ Acceso directo al hardware
+- Solo Linux
+- Depende del entorno del SO
+- Mas dificil de replicar
+
+==============================================================================
+14. API REFERENCE
+==============================================================================
+
+ENDPOINTS:
+
+POST /predict
+  Description: Predice enfermedad en una imagen de hoja
+  Content-Type: multipart/form-data
+  Body:
+    - image: archivo de imagen (JPG, PNG, BMP)
+  Response 200:
+    {
+      "cultivo": "string - nombre del cultivo",
+      "enfermedad": "string - enfermedad detectada o 'Healthy'",
+      "probabilidad": number - confianza 0-100
+    }
+  Response 400:
+    { "error": "string", "mensaje": "string" }
+  Response 500:
+    { "error": "string", "mensaje": "string" }
+
+GET /health
+  Description: Health check
+  Response 200:
+    {
+      "status": "healthy",
+      "model_loaded": boolean,
+      "num_classes": number,
+      "timestamp": "ISO string"
+    }
+
+GET /model/info
+  Description: Informacion del modelo
+  Response 200:
+    {
+      "model_name": "string",
+      "num_classes": number,
+      "input_shape": "string",
+      "output_shape": "string",
+      "total_params": number
+    }
+
+GET /
+  Description: Sirve el frontend HTML
+
+==============================================================================
+15. SOLUCION DE PROBLEMAS
+==============================================================================
+
+PROBLEMA: "No se encontro el dataset"
+SOLUCION: Ejecutar primero 01_download_dataset.py y verificar que
+          la carpeta dataset/ existe.
+
+PROBLEMA: "Modelo no encontrado"
+SOLUCION: Ejecutar primero 04_entrenar_cnn.py y/o 05_transfer_learning.py
+          para generar los archivos .keras en models/.
+
+PROBLEMA: "Error de memoria (OOM)"
+SOLUCION: Reducir BATCH_SIZE en los scripts (default 32).
+          Para GPU con poca VRAM, usar 16 o 8.
+
+PROBLEMA: "La API no inicia"
+SOLUCION: Verificar que las dependencias estan instaladas:
+          pip install -r requirements.txt
+          Verificar que el modelo existe en models/.
+
+PROBLEMA: "Docker build falla"
+SOLUCION: Verificar que Docker esta corriendo:
+          docker info
+          Verificar que el Dockerfile existe y es correcto.
+
+PROBLEMA: "Imagen no procesada"
+SOLUCION: Verificar que la imagen es valida (JPG/PNG/BMP)
+          y que no esta corrupta. Tamano maximo 10MB.
+
+==============================================================================
+FIN DE LA DOCUMENTACION
+==============================================================================
+
+Proyecto: Sistema Inteligente para la Deteccion de Enfermedades
+          en Cultivos mediante CNN
+Grupo: 2
+Integrantes: 3
+Fecha: Julio 2026
+
+==============================================================================

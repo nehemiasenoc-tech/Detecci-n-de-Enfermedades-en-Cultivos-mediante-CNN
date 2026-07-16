@@ -1,0 +1,21 @@
+[Unit]
+Description=Plant Disease Detection CNN API
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/plant-disease-detection
+Environment="PATH=/opt/plant-disease-detection/venv/bin"
+ExecStart=/opt/plant-disease-detection/venv/bin/gunicorn \
+    --bind 0.0.0.0:5000 \
+    --workers 2 \
+    --timeout 120 \
+    --access-logfile /var/log/cnn-api/access.log \
+    --error-logfile /var/log/cnn-api/error.log \
+    "api.app:create_app()"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

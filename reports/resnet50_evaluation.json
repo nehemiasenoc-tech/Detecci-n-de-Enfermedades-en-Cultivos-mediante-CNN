@@ -1,0 +1,373 @@
+{
+  "model_name": "ResNet50",
+  "evaluated_on": "validation",
+  "num_classes": 38,
+  "total_images": 17572,
+  "metrics": {
+    "accuracy": 0.7685522422035056,
+    "precision_weighted": 0.806956530284256,
+    "recall_weighted": 0.7685522422035056,
+    "f1_weighted": 0.7574963540444081,
+    "precision_macro": 0.8083841466058681,
+    "recall_macro": 0.7688132824363252,
+    "f1_macro": 0.7585005393147375
+  },
+  "per_class_metrics": {
+    "Apple___Apple_scab": {
+      "cultivo": "Apple",
+      "enfermedad": "Apple scab",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Apple___Black_rot": {
+      "cultivo": "Apple",
+      "enfermedad": "Black rot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Apple___Cedar_apple_rust": {
+      "cultivo": "Apple",
+      "enfermedad": "Cedar apple rust",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Apple___healthy": {
+      "cultivo": "Apple",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Blueberry___healthy": {
+      "cultivo": "Blueberry",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Cherry_(including_sour)___Powdery_mildew": {
+      "cultivo": "Cherry (including sour)",
+      "enfermedad": "Powdery mildew",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Cherry_(including_sour)___healthy": {
+      "cultivo": "Cherry (including sour)",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+      "cultivo": "Corn (maize)",
+      "enfermedad": "Cercospora leaf spot Gray leaf spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Corn_(maize)___Common_rust_": {
+      "cultivo": "Corn (maize)",
+      "enfermedad": "Common rust",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Corn_(maize)___Northern_Leaf_Blight": {
+      "cultivo": "Corn (maize)",
+      "enfermedad": "Northern Leaf Blight",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Corn_(maize)___healthy": {
+      "cultivo": "Corn (maize)",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Grape___Black_rot": {
+      "cultivo": "Grape",
+      "enfermedad": "Black rot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Grape___Esca_(Black_Measles)": {
+      "cultivo": "Grape",
+      "enfermedad": "Esca (Black Measles)",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+      "cultivo": "Grape",
+      "enfermedad": "Leaf blight (Isariopsis Leaf Spot)",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Grape___healthy": {
+      "cultivo": "Grape",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Orange___Haunglongbing_(Citrus_greening)": {
+      "cultivo": "Orange",
+      "enfermedad": "Haunglongbing (Citrus greening)",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Peach___Bacterial_spot": {
+      "cultivo": "Peach",
+      "enfermedad": "Bacterial spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Peach___healthy": {
+      "cultivo": "Peach",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Pepper,_bell___Bacterial_spot": {
+      "cultivo": "Pepper, bell",
+      "enfermedad": "Bacterial spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Pepper,_bell___healthy": {
+      "cultivo": "Pepper, bell",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Potato___Early_blight": {
+      "cultivo": "Potato",
+      "enfermedad": "Early blight",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Potato___Late_blight": {
+      "cultivo": "Potato",
+      "enfermedad": "Late blight",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Potato___healthy": {
+      "cultivo": "Potato",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Raspberry___healthy": {
+      "cultivo": "Raspberry",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Soybean___healthy": {
+      "cultivo": "Soybean",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Squash___Powdery_mildew": {
+      "cultivo": "Squash",
+      "enfermedad": "Powdery mildew",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Strawberry___Leaf_scorch": {
+      "cultivo": "Strawberry",
+      "enfermedad": "Leaf scorch",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Strawberry___healthy": {
+      "cultivo": "Strawberry",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Bacterial_spot": {
+      "cultivo": "Tomato",
+      "enfermedad": "Bacterial spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Early_blight": {
+      "cultivo": "Tomato",
+      "enfermedad": "Early blight",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Late_blight": {
+      "cultivo": "Tomato",
+      "enfermedad": "Late blight",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Leaf_Mold": {
+      "cultivo": "Tomato",
+      "enfermedad": "Leaf Mold",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Septoria_leaf_spot": {
+      "cultivo": "Tomato",
+      "enfermedad": "Septoria leaf spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+      "cultivo": "Tomato",
+      "enfermedad": "Spider mites Two-spotted spider mite",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Target_Spot": {
+      "cultivo": "Tomato",
+      "enfermedad": "Target Spot",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+      "cultivo": "Tomato",
+      "enfermedad": "Tomato Yellow Leaf Curl Virus",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___Tomato_mosaic_virus": {
+      "cultivo": "Tomato",
+      "enfermedad": "Tomato mosaic virus",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    },
+    "Tomato___healthy": {
+      "cultivo": "Tomato",
+      "enfermedad": "healthy",
+      "precision": 0,
+      "recall": 0,
+      "f1-score": 0,
+      "support": 0
+    }
+  },
+  "top_confusions": [
+    {
+      "real": "Black rot",
+      "predicho": "Esca (Black Measles)",
+      "veces": 262
+    },
+    {
+      "real": "Target Spot",
+      "predicho": "healthy",
+      "veces": 261
+    },
+    {
+      "real": "Late blight",
+      "predicho": "Early blight",
+      "veces": 204
+    },
+    {
+      "real": "Spider mites Two-spotted spider mite",
+      "predicho": "healthy",
+      "veces": 138
+    },
+    {
+      "real": "Late blight",
+      "predicho": "healthy",
+      "veces": 97
+    },
+    {
+      "real": "Tomato Yellow Leaf Curl Virus",
+      "predicho": "Spider mites Two-spotted spider mite",
+      "veces": 83
+    },
+    {
+      "real": "Bacterial spot",
+      "predicho": "healthy",
+      "veces": 74
+    },
+    {
+      "real": "Bacterial spot",
+      "predicho": "healthy",
+      "veces": 72
+    },
+    {
+      "real": "Septoria leaf spot",
+      "predicho": "healthy",
+      "veces": 67
+    },
+    {
+      "real": "Bacterial spot",
+      "predicho": "Early blight",
+      "veces": 61
+    }
+  ]
+}
