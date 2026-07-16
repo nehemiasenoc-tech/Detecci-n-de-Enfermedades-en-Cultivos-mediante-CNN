@@ -18,7 +18,7 @@
 \definecolor{badred}{RGB}{178,34,34}
 
 \title[Detección de Enfermedades en Cultivos]{Sistema Inteligente para la Detección de\\Enfermedades en Cultivos mediante CNN}
-\subtitle{Avance del proyecto — Fases de modelado}
+\subtitle{Resultados finales del proyecto}
 \author{Grupo 2}
 \date{15 de julio de 2026}
 
@@ -91,10 +91,11 @@
     Fase 1 — Exploración (EDA) & \textcolor{okgreen}{\textbf{Completada}} \\
     Fase 2 — Preprocesamiento y Augmentation & \textcolor{okgreen}{\textbf{Completada}} \\
     Fase 3 — CNN propia & \textcolor{okgreen}{\textbf{Completada}} \\
-    Fase 4 — Transfer Learning (ResNet50) & \textcolor{badred}{\textbf{Interrumpida (2 intentos)}} \\
-    Fase 5 — Evaluación comparativa & \textcolor{warnorange}{\textbf{Pendiente}} \\
-    Docker + despliegue & \textcolor{warnorange}{\textbf{Preparado, sin probar}} \\
-    Subida a GitHub & \textcolor{badred}{\textbf{Pendiente}} \\
+    Fase 4 — Transfer Learning (ResNet50) & \textcolor{okgreen}{\textbf{Completada}} \\
+    Fase 5 — Evaluación comparativa & \textcolor{okgreen}{\textbf{Completada}} \\
+    Fase 6 — API + Docker & \textcolor{warnorange}{\textbf{Imagen construida, prueba en curso}} \\
+    Fase 7 — Frontend & \textcolor{okgreen}{\textbf{Completada}} \\
+    Subida a GitHub & \textcolor{okgreen}{\textbf{Completada}} \\
     \bottomrule
   \end{tabular}
 \end{frame}
@@ -176,6 +177,38 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{Resultado final: entrenamiento completado}
+  \begin{block}{Segundo intento en Kaggle}
+    Esta vez el entrenamiento corrió sin interrupciones: \textbf{30 épocas completas en $\sim$8.7 horas}, tal como se había estimado.
+  \end{block}
+  \begin{itemize}
+    \item \textbf{Accuracy de validación: 76.9\%}
+    \item Modelo final descargado e integrado al proyecto (\texttt{resnet50\_best.keras}).
+  \end{itemize}
+\end{frame}
+
+% ===========================================================
+\section{Fase 5 — Evaluación comparativa}
+
+\begin{frame}{CNN propia vs. ResNet50}
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Métrica} & \textbf{CNN propia} & \textbf{ResNet50} \\
+    \midrule
+    Accuracy & 99.7\% & 76.9\% \\
+    Precisión & 99.7\% & 80.7\% \\
+    Recall & 99.7\% & 76.9\% \\
+    F1-score & 99.7\% & 75.8\% \\
+    \bottomrule
+  \end{tabular}
+  \vspace{0.4cm}
+  \begin{itemize}
+    \item La CNN propia superó claramente a ResNet50 en este dataset.
+    \item Se generaron matrices de confusión, curvas ROC y métricas por clase para ambos modelos (\texttt{reports/}).
+  \end{itemize}
+\end{frame}
+
 % ===========================================================
 \section{Limitaciones y dificultades}
 
@@ -185,21 +218,19 @@
     \item \textbf{Cuotas de Kaggle}: sesiones gratuitas de GPU limitadas ($\sim$9–12 h por sesión, $\sim$30 h/semana), lo que restringe cuántos reintentos se pueden hacer.
     \item \textbf{Interrupciones de entrenamiento}: tanto local (suspensión del equipo) como en Kaggle (corte de sesión antes de guardar artefactos finales de la CNN).
     \item \textbf{Hardware local limitado}: GPU de laptop (RTX 3050) suficiente para validar checkpoints, pero no ideal para entrenar ResNet50 completo en tiempos cortos.
-    \item \textbf{Tiempo de cómputo de ResNet50}: al ser un modelo mucho más pesado que la CNN propia, su entrenamiento completo requiere varias horas, lo que aún está pendiente de completarse.
+    \item \textbf{Tiempo de cómputo de ResNet50}: al ser un modelo mucho más pesado que la CNN propia, su entrenamiento completo tomó cerca de 9 horas.
   \end{itemize}
 \end{frame}
 
 % ===========================================================
-\section{Próximos pasos}
+\section{Estado final del proyecto}
 
-\begin{frame}{Próximos pasos}
+\begin{frame}{Estado final}
   \begin{enumerate}
-    \item Ejecutar Fase 4 (ResNet50) vía Kaggle ``Save Version'' hasta completarla.
-    \item Descargar artefactos finales (\texttt{resnet50\_best.keras}, resultados) al repositorio local.
-    \item Ejecutar Fase 5: evaluación comparativa (accuracy, precision, recall, F1, matriz de confusión) entre CNN propia y ResNet50.
-    \item Probar la API Flask localmente (\texttt{/predict}, \texttt{/health}).
-    \item Construir y probar la imagen Docker de extremo a extremo.
-    \item Subir el proyecto completo a un repositorio de GitHub.
+    \item Ambos modelos entrenados y evaluados (accuracy, precision, recall, F1, matriz de confusión).
+    \item API Flask probada localmente (\texttt{/predict}, \texttt{/health}) junto con el frontend web.
+    \item Imagen Docker construida correctamente.
+    \item Proyecto completo subido a GitHub.
   \end{enumerate}
 \end{frame}
 
