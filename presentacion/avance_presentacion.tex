@@ -173,7 +173,7 @@
 % ===========================================================
 \section{Fase 4 — ResNet50: qué pasó}
 
-\begin{frame}{Intento 1: entrenamiento local}
+\begin{frame}{Fase 4 — Intento 1: entrenamiento local}
   \begin{itemize}
     \item Se lanzó el entrenamiento localmente usando la GPU del equipo (RTX 3050 laptop) con el dataset ya descargado.
     \item El proceso \textbf{se interrumpió antes de terminar} (aprox. 6 horas después de iniciado, sin actividad posterior) — muy probablemente por suspensión del equipo o cierre de la sesión.
@@ -181,7 +181,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Verificación del checkpoint recuperado}
+\begin{frame}{Fase 4 — Verificación del checkpoint recuperado}
   \begin{itemize}
     \item Se cargó el checkpoint y se evaluó contra las 17{,}572 imágenes de validación.
   \end{itemize}
@@ -194,7 +194,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Decisión y siguiente intento}
+\begin{frame}{Fase 4 — Decisión y siguiente intento}
   \begin{itemize}
     \item Dado que el enfoque ``Save Version'' de Kaggle funcionó de forma confiable para la CNN propia (corre en segundo plano, sin depender del navegador ni de la laptop encendida), se decidió repetir el mismo enfoque para ResNet50.
     \item Script \texttt{kaggle\_notebook/04\_transfer\_learning.py} ya ajustado y listo para lanzar.
@@ -204,7 +204,7 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{Resultado final: entrenamiento completado}
+\begin{frame}{Fase 4 — Resultado final: entrenamiento completado}
   \begin{block}{Segundo intento en Kaggle}
     Esta vez el entrenamiento corrió sin interrupciones: \textbf{30 épocas completas en $\sim$8.7 horas}, tal como se había estimado.
   \end{block}
@@ -214,10 +214,21 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Fase 4 — Curvas de entrenamiento}
+  \centering
+  \includegraphics[width=0.62\textwidth]{images/resnet50_training.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item El accuracy de entrenamiento sube de forma estable hasta $\sim$78\%; el de validación es mucho más ruidoso (sube y baja bruscamente de época a época), aunque la tendencia general también es a mejorar.
+    \item El mejor checkpoint se guardó en la época 26 (76.9\% val accuracy) — el ruido en validación es normal al descongelar capas de un modelo grande; por eso se usa \texttt{ModelCheckpoint} con el mejor punto, no la última época.
+  \end{itemize}
+\end{frame}
+
 % ===========================================================
 \section{Fase 5 — Evaluación comparativa}
 
-\begin{frame}{CNN propia vs. ResNet50}
+\begin{frame}{Fase 5 — CNN propia vs. ResNet50}
   \centering
   \begin{tabular}{lcc}
     \toprule
@@ -233,6 +244,39 @@
   \begin{itemize}
     \item La CNN propia superó claramente a ResNet50 en este dataset.
     \item Se generaron matrices de confusión, curvas ROC y métricas por clase para ambos modelos (\texttt{reports/}).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fase 5 — Comparación final de métricas}
+  \centering
+  \includegraphics[width=0.72\textwidth]{images/final_comparison.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item Izquierda: la CNN propia gana en las 4 métricas frente a ResNet50, no solo en accuracy.
+    \item Derecha: el resultado de la CNN propia es igual de alto en promedio ponderado (\textit{weighted}, pondera por cantidad de imágenes por clase) que en promedio simple (\textit{macro}, todas las clases pesan igual) — es decir, no le va bien solo en las clases con más imágenes, sino en todas por igual.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fase 5 — Matrices de confusión}
+  \centering
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/cnn_propia_confusion_matrix.png}\\
+      \footnotesize CNN Propia
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/resnet50_confusion_matrix.png}\\
+      \footnotesize ResNet50
+    \end{column}
+  \end{columns}
+  \vspace{0.3cm}
+  \footnotesize
+  \begin{itemize}
+    \item La diagonal de la CNN propia es prácticamente sólida (casi sin errores visibles).
+    \item ResNet50 también acierta en la mayoría de los casos, pero muestra más confusión con clases vecinas — típicamente distintas enfermedades de un mismo cultivo, que se parecen más entre sí visualmente.
   \end{itemize}
 \end{frame}
 
