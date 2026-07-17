@@ -19,9 +19,9 @@
 \definecolor{badred}{RGB}{178,34,34}
 
 \title[Detección de Enfermedades en Cultivos]{Sistema Inteligente para la Detección de\\Enfermedades en Cultivos mediante CNN}
-\subtitle{Resultados finales del proyecto}
+\subtitle{Resultados finales del proyecto — Organización por fases de desarrollo}
 \author{Grupo 2}
-\date{15 de julio de 2026}
+\date{16 de julio de 2026}
 
 \begin{document}
 
@@ -33,6 +33,20 @@
 % ---------------------------------------------------------
 \begin{frame}{Agenda}
   \tableofcontents
+\end{frame}
+
+% ===========================================================
+\section{Contexto del proyecto}
+
+\begin{frame}{El problema y el dataset}
+  \begin{block}{El problema}
+    Una cooperativa agrícola necesita una aplicación que permita diagnosticar enfermedades en hojas de cultivos a partir de fotografías tomadas con un celular, exponiendo el diagnóstico mediante una \textbf{API} y una \textbf{interfaz web} simple.
+  \end{block}
+  \begin{itemize}
+    \item \textbf{Dataset}: ``New Plant Diseases Dataset'' (Kaggle), $\sim$3\,GB, imágenes ya normalizadas a 256$\times$256\,px.
+    \item \textbf{38 clases} = 14 cultivos $\times$ sus enfermedades (o estado sano).
+    \item \textbf{87{,}867 imágenes} en total: 70{,}295 de entrenamiento y 17{,}572 de validación (split 80/20).
+  \end{itemize}
 \end{frame}
 
 % ===========================================================
@@ -81,9 +95,9 @@
 \end{frame}
 
 % ===========================================================
-\section{Avance por fases}
+\section{Resultados por fases}
 
-\begin{frame}{Resumen de avance}
+\begin{frame}{Resumen del estado final}
   \centering
   \begin{tabular}{p{5.2cm}p{3.5cm}}
     \toprule
@@ -277,6 +291,33 @@
   \begin{itemize}
     \item La diagonal de la CNN propia es prácticamente sólida (casi sin errores visibles).
     \item ResNet50 también acierta en la mayoría de los casos, pero muestra más confusión con clases vecinas — típicamente distintas enfermedades de un mismo cultivo, que se parecen más entre sí visualmente.
+  \end{itemize}
+\end{frame}
+
+% ===========================================================
+\section{Fase 6 y 7 — Despliegue y Frontend}
+
+\begin{frame}{Fase 6 — Despliegue con Docker}
+  \begin{itemize}
+    \item Imagen basada en \texttt{python:3.11-slim}, con \texttt{gunicorn} sirviendo la API (2 workers).
+    \item \texttt{HEALTHCHECK} integrado (\texttt{curl /health} cada 30s) para que Docker detecte si el servicio deja de responder.
+    \item \texttt{.dockerignore} excluye dataset, entorno virtual y material que no necesita el contenedor.
+  \end{itemize}
+  \begin{alertblock}{Reto real encontrado y corregido}
+    El contenedor fallaba al cargar el modelo por una incompatibilidad de versión de Keras: la imagen base solo permitía instalar una versión más antigua que la usada para guardar los modelos. Se corrigió actualizando la imagen base y fijando la versión exacta de Keras en \texttt{requirements.txt}.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Fase 7 — Frontend: resultado}
+  \centering
+  \includegraphics[width=0.42\textwidth]{images/frontend_resultado.png}
+  \vspace{0.15cm}
+  \footnotesize
+  \begin{itemize}
+    \item Selección de imagen por arrastrar-y-soltar o clic, con vista previa antes de analizar.
+    \item Indicador de conexión con la API en tiempo real (\textit{``API conectada''}, vía \texttt{/health}).
+    \item Resultado mostrado con cultivo, enfermedad, probabilidad (barra animada) y etiqueta de estado.
+    \item Probado de extremo a extremo: subir imagen $\to$ analizar $\to$ ver resultado, servido desde el mismo contenedor Docker.
   \end{itemize}
 \end{frame}
 
