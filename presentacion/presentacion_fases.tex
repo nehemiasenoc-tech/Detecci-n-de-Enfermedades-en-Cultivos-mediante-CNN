@@ -115,11 +115,9 @@
   \end{tabular}
 \end{frame}
 
-\begin{frame}{Fase 1 y 2 — EDA y Preprocesamiento}
+\begin{frame}{Fase 1 — Exploración de datos (EDA)}
   \begin{itemize}
     \item Se analizaron las 38 clases: conteo de imágenes, balance entre clases, resolución.
-    \item Se generó \texttt{class\_mapping.json}: traduce cada clase técnica (ej. \texttt{Tomato\_\_\_Early\_blight}) a \textit{cultivo} + \textit{enfermedad} en español — pieza clave que usa la API para responder.
-    \item Se configuró \textbf{Data Augmentation} (rotación, zoom, brillo, flip horizontal) para mejorar la generalización del modelo.
     \item Reportes y gráficos generados correctamente en \texttt{reports/}.
   \end{itemize}
 \end{frame}
@@ -134,6 +132,13 @@
     \item \textbf{Tomate} concentra el 26\% de las imágenes (10 subtipos de enfermedad); el resto se reparte entre 13 cultivos más.
     \item División 80/20: 70{,}295 imágenes de entrenamiento y 17{,}572 de validación.
     \item Prácticamente todas las imágenes vienen ya normalizadas a 256$\times$256 px.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fase 2 — Preprocesamiento y Data Augmentation}
+  \begin{itemize}
+    \item Se generó \texttt{class\_mapping.json}: traduce cada clase técnica (ej. \texttt{Tomato\_\_\_Early\_blight}) a \textit{cultivo} + \textit{enfermedad} en español — pieza clave que usa la API para responder.
+    \item Se configuró \textbf{Data Augmentation} (rotación, zoom, brillo, flip horizontal) para mejorar la generalización del modelo.
   \end{itemize}
 \end{frame}
 
