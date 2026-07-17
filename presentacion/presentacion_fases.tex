@@ -184,8 +184,17 @@
     \item 99.73\% de accuracy en validación, muy por encima del azar (2.63\%, equivalente a acertar 1 de 38 clases).
     \item Confirma que el modelo aprendió patrones reales de las imágenes y no está adivinando.
   \end{itemize}
-  \vspace{0.15cm}
-  \footnotesize Nota: no se generaron las curvas de entrenamiento por época (\texttt{cnn\_custom\_training.png}) porque la sesión de Kaggle se cortó antes de esa etapa final del script; el valor mostrado es el accuracy real del checkpoint guardado.
+\end{frame}
+
+\begin{frame}{Fase 3 — Curvas de entrenamiento}
+  \centering
+  \includegraphics[width=0.62\textwidth]{images/cnn_custom_training.png}
+  \vspace{0.2cm}
+  \footnotesize
+  \begin{itemize}
+    \item Entrenamiento de 41 épocas: el accuracy de validación converge rápido (supera 90\% desde la época 5) y se estabiliza cerca del 99\% a partir de la época 20, con algo de ruido puntual típico de mini-batches pequeños.
+    \item Mejor checkpoint guardado en la época 36 (99.73\% val accuracy) — el loss de validación baja de forma consistente, sin señales de sobreajuste.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Fase 4 — Intento 1: entrenamiento local}

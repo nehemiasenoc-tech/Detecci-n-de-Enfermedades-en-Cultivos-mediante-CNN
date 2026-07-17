@@ -120,6 +120,13 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{CNN propia: curvas de entrenamiento}
+  \centering
+  \includegraphics[width=0.56\textwidth]{images/cnn_custom_training.png}
+  \vspace{0.1cm}
+  \footnotesize 41 épocas: el accuracy de validación converge rápido (supera 90\% desde la época 5) y se estabiliza cerca del 99\%; mejor checkpoint en la época 36 (99.73\%), sin señales de sobreajuste en el loss.
+\end{frame}
+
 \begin{frame}{Transfer Learning — ResNet50}
   \begin{itemize}
     \item Un primer intento de entrenamiento local se interrumpió antes de completarse; se repitió con el mismo enfoque de ``Save Version'' en Kaggle que funcionó para la CNN propia.
