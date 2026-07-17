@@ -188,9 +188,6 @@
   \footnotesize Nota: no se generaron las curvas de entrenamiento por época (\texttt{cnn\_custom\_training.png}) porque la sesión de Kaggle se cortó antes de esa etapa final del script; el valor mostrado es el accuracy real del checkpoint guardado.
 \end{frame}
 
-% ===========================================================
-\section{Fase 4 — ResNet50: qué pasó}
-
 \begin{frame}{Fase 4 — Intento 1: entrenamiento local}
   \begin{itemize}
     \item Se lanzó el entrenamiento localmente usando la GPU del equipo (RTX 3050 laptop) con el dataset ya descargado.
@@ -243,9 +240,6 @@
   \end{itemize}
 \end{frame}
 
-% ===========================================================
-\section{Fase 5 — Evaluación comparativa}
-
 \begin{frame}{Fase 5 — CNN propia vs. ResNet50}
   \centering
   \begin{tabular}{lcc}
@@ -297,9 +291,6 @@
     \item ResNet50 también acierta en la mayoría de los casos, pero muestra más confusión con clases vecinas — típicamente distintas enfermedades de un mismo cultivo, que se parecen más entre sí visualmente.
   \end{itemize}
 \end{frame}
-
-% ===========================================================
-\section{Fase 6 y 7 — Despliegue y Frontend}
 
 \begin{frame}{Fase 6 — Despliegue con Docker}
   \begin{itemize}
